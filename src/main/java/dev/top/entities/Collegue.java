@@ -19,7 +19,7 @@ public class Collegue {
 	private String nom;
 	
 	@Column
-	private Integer score=new Integer(0);
+	private Integer score;
 	
 	@Column
 	private String lienPhoto;
@@ -27,9 +27,10 @@ public class Collegue {
 	public Collegue() {
 	}
 	
-	public Collegue(String nom, String lienPhoto) {
+	public Collegue(String nom, Integer score, String lienPhoto) {
 		super(); 
 		this.nom = nom;
+		this.score = score;
 		this.lienPhoto = lienPhoto;
 	}
 
