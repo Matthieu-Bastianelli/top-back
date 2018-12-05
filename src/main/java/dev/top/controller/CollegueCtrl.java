@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +18,8 @@ import dev.top.entities.Collegue;
 import dev.top.repos.CollegueRepo;
 import dev.top.service.ChampAvis;
 
+
+@CrossOrigin
 @RestController // => pas besoin si @ResponseBody sur Méthode.
 @RequestMapping("/collegues")
 public class CollegueCtrl {
