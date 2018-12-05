@@ -18,7 +18,6 @@ import dev.top.entities.Collegue;
 import dev.top.repos.CollegueRepo;
 import dev.top.service.ChampAvis;
 
-
 @CrossOrigin
 @RestController // => pas besoin si @ResponseBody sur Méthode.
 @RequestMapping("/collegues")
@@ -28,34 +27,52 @@ public class CollegueCtrl {
 	CollegueRepo collegueRepo;
 
 	@GetMapping
-	public ResponseEntity<List<Collegue>> findAll(){
+	public ResponseEntity<List<Collegue>> findAll() {
 		List<Collegue> listeCollegues = this.collegueRepo.findAll();
-		
-		return ResponseEntity.status(HttpStatus.OK).body(listeCollegues);
+		if (!listeCollegues.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.OK).body(listeCollegues);
+		} else
+
+		{
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+
+		}
 	}
 
-//	@GetMapping
-//	public List<Collegue> findAll() {
-//		return this.collegueRepo.findAll();
-//	}
+	@GetMapping("/{nom}")
+	public ResponseEntity<Collegue> findByNom(@PathVariable String nom) {
+		Collegue collegue = this.collegueRepo.findByNom(nom);
+
+		if (collegue != null) {
+			return ResponseEntity.status(HttpStatus.OK).body(collegue);
+		} else {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+
+		}
+
+	}
 
 	@PatchMapping("/{nom}/")
 	public ResponseEntity<Collegue> patch(@PathVariable String nom, @RequestBody Avis avis) {
 
 		Collegue collegue = this.collegueRepo.findByNom(nom);
 
-		if (avis.getAction() == ChampAvis.AIMER) {
-			collegue.setScore(collegue.getScore() + 10);
-			System.out.println(collegue.getScore());
-		} else if (avis.getAction() == ChampAvis.DETESTER) {
-			collegue.setScore(collegue.getScore() - 5);
+		if (collegue != null) {
+			if (avis.getAction() == ChampAvis.AIMER) {
+				collegue.setScore(collegue.getScore() + 10);
+				System.out.println(collegue.getScore());
+			} else if (avis.getAction() == ChampAvis.DETESTER) {
+				collegue.setScore(collegue.getScore() - 5);
+			} else {
+				System.out.println("Erreur, le body de la requête n'est pas perçu comme un Avis (enum) valide.");
+			}
+
+			this.collegueRepo.save(collegue);
+
+			return ResponseEntity.status(HttpStatus.OK).body(collegue);
 		} else {
-			System.out.println("Erreur, le body de la requête n'est pas perçu comme un Avis (enum) valide.");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
-
-		this.collegueRepo.save(collegue);
-
-		return ResponseEntity.status(HttpStatus.OK).body(collegue);
 	}
 
 }

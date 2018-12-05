@@ -23,15 +23,19 @@ public class Collegue {
 	
 	@Column
 	private String lienPhoto;
+	
+	@Column
+	private String email;
 
 	public Collegue() {
 	}
 	
-	public Collegue(String nom, Integer score, String lienPhoto) {
+	public Collegue(String nom, Integer score, String lienPhoto, String email) {
 		super(); 
 		this.nom = nom;
 		this.score = score;
 		this.lienPhoto = lienPhoto;
+		this.email =email;
 	}
 
 	public Integer getId() {
@@ -60,6 +64,14 @@ public class Collegue {
 
 	public void setLienPhoto(String lienPhoto) {
 		this.lienPhoto = lienPhoto;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 	
