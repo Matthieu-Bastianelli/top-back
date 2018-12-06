@@ -37,6 +37,13 @@ public class Collegue {
 		this.lienPhoto = lienPhoto;
 		this.email =email;
 	}
+	
+	public void miseAJourCollegue(String nom, Integer score, String lienPhoto, String email) {
+		this.nom = nom;
+		this.score = score;
+		this.lienPhoto = lienPhoto;
+		this.email =email;
+	}
 
 	public Integer getId() {
 		return id;
