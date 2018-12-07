@@ -125,6 +125,7 @@ public class CollegueCtrl {
 		
 		
 		if (result == null) {
+			//Est ce qu'il est mieux de le mettre dans angular?
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).header("not_found", "matricule").body(null);
 		}else {
 			
